@@ -4,7 +4,9 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -33,7 +35,7 @@ public class Persona {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_spedizione", nullable = false)
-    private HashSet<Spedizione> spedizioni;
+    private List<Spedizione> spedizioni = new ArrayList<>(0);
 
 
 

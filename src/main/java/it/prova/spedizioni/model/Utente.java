@@ -1,7 +1,9 @@
 package it.prova.spedizioni.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -56,6 +58,7 @@ public class Utente {
     @ManyToMany
     @JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
     private Set<Ruolo> ruoli = new HashSet<>(0);
+
 
     public boolean isAttivo() {
         return this.stato != null && this.stato.equals(StatoUtente.ATTIVO);

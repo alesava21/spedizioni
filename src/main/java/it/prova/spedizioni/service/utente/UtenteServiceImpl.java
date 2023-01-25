@@ -16,68 +16,62 @@ import java.util.List;
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
-    private UtenteRepository utenteRepository;
+    private UtenteRepository repository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    @Override
     public List<Utente> listAllUtenti() {
-        return (List<Utente>) utenteRepository.findAll();
+        return (List<Utente>) repository.findAll();
     }
 
-    @Override
     public Utente caricaSingoloUtente(Long id) {
-        return utenteRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
-    @Override
     public Utente caricaSingoloUtenteConRuoli(Long id) {
-        return utenteRepository.findById(id).orElse(null);
+        return repository.findByIdConRuoli(id).orElse(null);
     }
 
-    @Override
+    @Transactional
     public void aggiorna(Utente utenteInstance) {
-        Utente utenteReload = utenteRepository.findById(utenteInstance.id()).orElse(null);
-
-        if (utenteReload == null) {
-            throw new RuntimeException("Utente non trovato" + utenteInstance.id());
-        }
-
-        utenteReload.nome(utenteInstance.nome()).cognome(utenteInstance.cognome()).username(utenteInstance.username()).ruoli(utenteInstance.ruoli());
-        utenteRepository.save(utenteReload);
+        // deve aggiornare solo nome, cognome, username, ruoli
+        Utente utenteReloaded = repository.findById(utenteInstance.id()).orElse(null);
+        if (utenteReloaded == null)
+//			new Utente(null, "mario", null, null, null, null, null, null, null, null)
+            throw new RuntimeException("Elemento non trovato");
+        utenteReloaded.nome(utenteInstance.nome()).cognome(utenteInstance.cognome()).username(utenteInstance.username())
+                .ruoli(utenteInstance.ruoli());
+        repository.save(utenteReloaded);
     }
 
-    @Override
+    @Transactional
     public void inserisciNuovo(Utente utenteInstance) {
         utenteInstance.stato(StatoUtente.CREATO).password(passwordEncoder.encode(utenteInstance.password()));
         utenteInstance.dateCreated(LocalDate.now());
-        utenteRepository.save(utenteInstance);
-
+        repository.save(utenteInstance);
     }
 
-    @Override
+    @Transactional
     public void rimuovi(Long idToRemove) {
-    utenteRepository.deleteById(idToRemove);
+        repository.deleteById(idToRemove);
+        ;
     }
 
-    @Override
     public List<Utente> findByExample(Utente example) {
-        return null;
+        // TODO Da implementare
+        return listAllUtenti();
     }
 
-    @Override
-    public Utente findByUsernameAndPassword(String username, String password) {
-        return utenteRepository.findByUsernameAndPasswordAndStato(username, password, StatoUtente.ATTIVO);
-    }
-
-    @Override
     public Utente eseguiAccesso(String username, String password) {
-        return utenteRepository.findByUsernameAndPasswordAndStato(username, password, StatoUtente.ATTIVO);
+        return repository.findByUsernameAndPasswordAndStato(username, password, StatoUtente.ATTIVO);
     }
 
-    @Override
+    public Utente findByUsernameAndPassword(String username, String password) {
+        return repository.findByUsernameAndPassword(username, password);
+    }
+
+    @Transactional
     public void changeUserAbilitation(Long utenteInstanceId) {
         Utente utenteInstance = caricaSingoloUtente(utenteInstanceId);
         if (utenteInstance == null)
@@ -91,8 +85,8 @@ public class UtenteServiceImpl implements UtenteService {
             utenteInstance.stato(StatoUtente.ATTIVO);
     }
 
-    @Override
     public Utente findByUsername(String username) {
-        return utenteRepository.findByUsername(username).orElse(null);
+        return repository.findByUsername(username).orElse(null);
     }
+
 }
