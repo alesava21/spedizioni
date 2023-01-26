@@ -32,7 +32,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
 
     @Override
     @Transactional
-    public void aggiorna(Spedizione spedizioneInstance) {
+    public Spedizione aggiorna(Spedizione spedizioneInstance) {
         Spedizione spedizioneReloaded = spedizioneRepository.findById(spedizioneInstance.id()).orElse(null);
         if (spedizioneReloaded == null){
             throw new RuntimeException("Non e stato possibile tovare nessuna spedizoone con id:"+ spedizioneInstance.id());
@@ -41,7 +41,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
                 .peso(spedizioneInstance.peso()).altezza(spedizioneInstance.peso()).lunghezza(spedizioneInstance.lunghezza())
                 .nomeDestinatario(spedizioneInstance.nomeDestinatario()).cognomeDestinatario(spedizioneReloaded.cognomeDestinatario())
                 .dataSpedizione(spedizioneInstance.dataSpedizione());
-        spedizioneRepository.save(spedizioneReloaded);
+      return  spedizioneRepository.save(spedizioneReloaded);
     }
 
     @Override
@@ -51,6 +51,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
     }
 
     @Override
+    @Transactional
     public void rimuovi(Long idToRemove) {
         spedizioneRepository.deleteById(idToRemove);
     }

@@ -10,7 +10,7 @@ public interface SpedizioneService {
 
     public Spedizione caricaSingolaSpedizione(Long id);
 
-    public void aggiorna(Spedizione spedizioneInstance);
+    public Spedizione aggiorna(Spedizione spedizioneInstance);
 
     public void inserisciNuovo(Spedizione spedizioneInstance);
 
