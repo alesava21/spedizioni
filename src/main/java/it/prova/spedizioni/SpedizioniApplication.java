@@ -32,6 +32,11 @@ public class SpedizioniApplication implements CommandLineRunner {
                     .inserisciNuovo(Ruolo.builder().descrizione("Administrator").codice(Ruolo.ROLE_ADMIN).build());
         }
 
+        if (ruoloService.cercaPerDescrizioneECodice("Utente", Ruolo.ROLE_UTENTE) == null) {
+            ruoloService
+                    .inserisciNuovo(Ruolo.builder().descrizione("Utente").codice(Ruolo.ROLE_UTENTE).build());
+        }
+
         if (utenteService.findByUsername("admin") == null) {
             Utente admin = Utente.builder()
                     .nome("mario")
@@ -41,6 +46,19 @@ public class SpedizioniApplication implements CommandLineRunner {
                     .dateCreated(LocalDate.now())
                     .build();
             admin.ruoli().add(ruoloService.cercaPerDescrizioneECodice("Administrator", Ruolo.ROLE_ADMIN));
+            utenteService.inserisciNuovo(admin);
+            utenteService.changeUserAbilitation(admin.id());
+        }
+
+        if (utenteService.findByUsername("user") == null) {
+            Utente admin = Utente.builder()
+                    .nome("lorenzo")
+                    .cognome("test")
+                    .username("user")
+                    .password("admin")
+                    .dateCreated(LocalDate.now())
+                    .build();
+            admin.ruoli().add(ruoloService.cercaPerDescrizioneECodice("Utente", Ruolo.ROLE_UTENTE));
             utenteService.inserisciNuovo(admin);
             utenteService.changeUserAbilitation(admin.id());
         }

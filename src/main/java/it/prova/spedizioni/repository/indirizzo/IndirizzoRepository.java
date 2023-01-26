@@ -1,4 +1,7 @@
 package it.prova.spedizioni.repository.indirizzo;
 
-public class IndirizzoRepository {
+import it.prova.spedizioni.model.Indirizzo;
+import org.springframework.data.repository.CrudRepository;
+
+public interface IndirizzoRepository extends CrudRepository<Indirizzo, Long> {
 }
