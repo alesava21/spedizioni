@@ -1,4 +1,7 @@
 package it.prova.spedizioni.repository.spedizione;
 
-public class SpedizioneRepository {
+import it.prova.spedizioni.model.Spedizione;
+import org.springframework.data.repository.CrudRepository;
+
+public interface SpedizioneRepository extends CrudRepository<Spedizione, Long> {
 }
