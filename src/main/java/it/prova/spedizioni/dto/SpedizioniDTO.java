@@ -14,21 +14,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class SpedizioniDTO {
 
     private Long id;
 
     private Integer codiceSpedizione;
     private String descrizione;
-    private int peso;
-    private int altezza;
-    private int lunghezza;
+    private Integer peso;
+    private Integer altezza;
+    private Integer lunghezza;
     private String nomeDestinatario;
     private String cognomeDestinatario;
     private String dataSpedizione;
+    private  String nomeMittente;
+    private  String cognomeMittente;
 
     public Spedizione buildSpedizioneModel() {
-        return Spedizione.builder()
+        Spedizione result = Spedizione.builder()
                 .id(id)
                 .codiceSpedizione(codiceSpedizione)
                 .descrizione(descrizione)
@@ -38,7 +41,10 @@ public class SpedizioniDTO {
                 .nomeDestinatario(nomeDestinatario)
                 .cognomeDestinatario(cognomeDestinatario)
                 .dataSpedizione(dataSpedizione)
+                .nomeMittente(nomeMittente)
+                .cognomeMittente(cognomeMittente)
                 .build();
+        return result;
     }
 
     public static SpedizioniDTO buildSpedizioniDTOFromModel(Spedizione spedizioneModel) {
@@ -52,6 +58,8 @@ public class SpedizioniDTO {
                 .nomeDestinatario(spedizioneModel.nomeDestinatario())
                 .cognomeDestinatario(spedizioneModel.cognomeDestinatario())
                 .dataSpedizione(spedizioneModel.dataSpedizione())
+                .nomeMittente(spedizioneModel.nomeMittente())
+                .cognomeMittente(spedizioneModel.cognomeMittente())
                 .build();
     }
 

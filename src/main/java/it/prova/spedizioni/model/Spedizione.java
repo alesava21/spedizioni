@@ -44,8 +44,10 @@ public class Spedizione {
     @Column(name = "dataSpedizione")
     private String dataSpedizione;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_persona", nullable = false)
-    private Persona persona;
+    @Column(name = "nomeMittente")
+    private String nomeMittente;
+
+    @Column(name = "cognomeMittente")
+    private String cognomeMittente;
 
 }

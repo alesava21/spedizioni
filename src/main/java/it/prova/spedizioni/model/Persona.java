@@ -33,11 +33,4 @@ public class Persona {
     @JoinColumn(name = "id_indirizzo", nullable = false)
     private Indirizzo indirizzo;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_spedizione", nullable = false)
-    private List<Spedizione> spedizioni = new ArrayList<>(0);
-
-
-
-
 }

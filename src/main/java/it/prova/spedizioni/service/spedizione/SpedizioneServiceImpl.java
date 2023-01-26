@@ -1,11 +1,14 @@
 package it.prova.spedizioni.service.spedizione;
 
 import it.prova.spedizioni.model.Spedizione;
+import it.prova.spedizioni.model.Utente;
 import it.prova.spedizioni.repository.spedizione.SpedizioneRepository;
+import it.prova.spedizioni.repository.utente.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -14,6 +17,9 @@ public class SpedizioneServiceImpl implements SpedizioneService{
 
     @Autowired
     private SpedizioneRepository spedizioneRepository;
+
+    @Autowired
+    private UtenteRepository utenteRepository;
     @Override
     public List<Spedizione> listAllSpedizioni() {
         return (List<Spedizione>) spedizioneRepository.findAll();
@@ -25,6 +31,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
     }
 
     @Override
+    @Transactional
     public void aggiorna(Spedizione spedizioneInstance) {
         Spedizione spedizioneReloaded = spedizioneRepository.findById(spedizioneInstance.id()).orElse(null);
         if (spedizioneReloaded == null){
@@ -38,6 +45,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
     }
 
     @Override
+    @Transactional
     public void inserisciNuovo(Spedizione spedizioneInstance) {
         spedizioneRepository.save(spedizioneInstance);
     }
@@ -48,6 +56,7 @@ public class SpedizioneServiceImpl implements SpedizioneService{
     }
 
     @Override
+    @Transactional
     public List<Spedizione> findByExample(Spedizione example) {
         return null;
     }
