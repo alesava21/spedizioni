@@ -4,6 +4,9 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -49,5 +52,10 @@ public class Spedizione {
 
     @Column(name = "cognomeMittente")
     private String cognomeMittente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Utente utente;
+
 
 }

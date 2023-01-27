@@ -10,9 +10,9 @@ public interface SpedizioneService {
 
     public Spedizione caricaSingolaSpedizione(Long id);
 
-    public Spedizione aggiorna(Spedizione spedizioneInstance);
+    public Spedizione aggiorna(Spedizione spedizioneInstanc);
 
-    public void inserisciNuovo(Spedizione spedizioneInstance);
+    public void inserisciNuovo(Spedizione spedizioneInstance, String username);
 
     public void rimuovi(Long idToRemove);
 

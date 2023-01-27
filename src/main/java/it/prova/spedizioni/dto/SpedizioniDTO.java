@@ -2,6 +2,7 @@ package it.prova.spedizioni.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.prova.spedizioni.model.Spedizione;
+import it.prova.spedizioni.model.Utente;
 import lombok.*;
 
 import java.util.List;
@@ -14,11 +15,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 public class SpedizioniDTO {
 
     private Long id;
-
     private Integer codiceSpedizione;
     private String descrizione;
     private Integer peso;

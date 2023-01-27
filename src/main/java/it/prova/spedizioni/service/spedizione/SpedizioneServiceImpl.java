@@ -13,13 +13,14 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class SpedizioneServiceImpl implements SpedizioneService{
+public class SpedizioneServiceImpl implements SpedizioneService {
 
     @Autowired
     private SpedizioneRepository spedizioneRepository;
 
     @Autowired
     private UtenteRepository utenteRepository;
+
     @Override
     public List<Spedizione> listAllSpedizioni() {
         return (List<Spedizione>) spedizioneRepository.findAll();
@@ -34,19 +35,21 @@ public class SpedizioneServiceImpl implements SpedizioneService{
     @Transactional
     public Spedizione aggiorna(Spedizione spedizioneInstance) {
         Spedizione spedizioneReloaded = spedizioneRepository.findById(spedizioneInstance.id()).orElse(null);
-        if (spedizioneReloaded == null){
-            throw new RuntimeException("Non e stato possibile tovare nessuna spedizoone con id:"+ spedizioneInstance.id());
+        if (spedizioneReloaded == null) {
+            throw new RuntimeException("Non e stato possibile tovare nessuna spedizoone con id:" + spedizioneInstance.id());
         }
         spedizioneReloaded.codiceSpedizione(spedizioneInstance.codiceSpedizione()).descrizione(spedizioneInstance.descrizione())
                 .peso(spedizioneInstance.peso()).altezza(spedizioneInstance.peso()).lunghezza(spedizioneInstance.lunghezza())
                 .nomeDestinatario(spedizioneInstance.nomeDestinatario()).cognomeDestinatario(spedizioneReloaded.cognomeDestinatario())
                 .dataSpedizione(spedizioneInstance.dataSpedizione());
-      return  spedizioneRepository.save(spedizioneReloaded);
+        return spedizioneRepository.save(spedizioneReloaded);
     }
 
     @Override
     @Transactional
-    public void inserisciNuovo(Spedizione spedizioneInstance) {
+    public void inserisciNuovo(Spedizione spedizioneInstance, String username) {
+        Utente utente= utenteRepository.findByUsername(username).orElse(null);
+        spedizioneInstance.utente(utente);
         spedizioneRepository.save(spedizioneInstance);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,11 +29,11 @@ public class SpedizioneController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void inserisci(@Valid @RequestBody SpedizioniDTO spedizioni) {
+    public void inserisci(@Valid @RequestBody SpedizioniDTO spedizioni, Principal principal) {
         if (spedizioni.getId() != null) {
             throw new RuntimeException("Non si puo inserire una spedizione con un id");
         }
-        spedizioneService.inserisciNuovo(spedizioni.buildSpedizioneModel());
+        spedizioneService.inserisciNuovo(spedizioni.buildSpedizioneModel(), principal.getName());
     }
 
     @GetMapping("/{id}")
