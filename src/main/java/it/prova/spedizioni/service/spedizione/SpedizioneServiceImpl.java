@@ -48,15 +48,29 @@ public class SpedizioneServiceImpl implements SpedizioneService {
     @Override
     @Transactional
     public void inserisciNuovo(Spedizione spedizioneInstance, String username) {
-        Utente utente= utenteRepository.findByUsername(username).orElse(null);
+        Utente utente = utenteRepository.findByUsername(username).orElse(null);
         spedizioneInstance.utente(utente);
+        int numero = creazioneCodiceSpedizione();
+        while (spedizioneRepository.findAllByCodiceSpedizione(numero) != null){
+             numero = creazioneCodiceSpedizione();
+        }
+        spedizioneInstance.codiceSpedizione(numero);
         spedizioneRepository.save(spedizioneInstance);
+
     }
 
     @Override
     @Transactional
     public void rimuovi(Long idToRemove) {
         spedizioneRepository.deleteById(idToRemove);
+    }
+
+    @Override
+    public Integer creazioneCodiceSpedizione() {
+        int min = 10000; // Minimum value of range
+        int max = 99999999; // Maximum value of range
+        int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
+        return random_int;
     }
 
     @Override

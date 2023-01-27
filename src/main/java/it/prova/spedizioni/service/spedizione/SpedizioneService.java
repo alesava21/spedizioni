@@ -16,6 +16,8 @@ public interface SpedizioneService {
 
     public void rimuovi(Long idToRemove);
 
+    public Integer creazioneCodiceSpedizione();
+
     public List<Spedizione> findByExample(Spedizione example);
 
 
