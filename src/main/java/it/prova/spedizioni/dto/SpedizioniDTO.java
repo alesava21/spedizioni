@@ -28,6 +28,7 @@ public class SpedizioniDTO {
     private String dataSpedizione;
     private  String nomeMittente;
     private  String cognomeMittente;
+    private Long id_persona;
 
     public Spedizione buildSpedizioneModel() {
         Spedizione result = Spedizione.builder()
@@ -59,6 +60,7 @@ public class SpedizioniDTO {
                 .dataSpedizione(spedizioneModel.dataSpedizione())
                 .nomeMittente(spedizioneModel.nomeMittente())
                 .cognomeMittente(spedizioneModel.cognomeMittente())
+                .id_persona(spedizioneModel.utente().id())
                 .build();
     }
 
