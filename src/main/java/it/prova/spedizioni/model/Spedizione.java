@@ -53,6 +53,18 @@ public class Spedizione {
     @Column(name = "cognomeMittente")
     private String cognomeMittente;
 
+    @Column(name = "indirizzo")
+    private String indirizzo;
+
+    @Column(name = "civico")
+    private String civico;
+
+    @Column(name = "regione")
+    private String regione;
+
+    @Column(name = "codicePostale")
+    private String codicePostale;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_persona", nullable = false)
     private Utente utente;

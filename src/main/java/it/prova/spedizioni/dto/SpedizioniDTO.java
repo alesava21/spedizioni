@@ -29,6 +29,10 @@ public class SpedizioniDTO {
     private  String nomeMittente;
     private  String cognomeMittente;
     private Long id_persona;
+    private String indirizzo;
+    private String civico;
+    private String regione;
+    private String codicePostale;
 
     public Spedizione buildSpedizioneModel() {
         Spedizione result = Spedizione.builder()
@@ -43,6 +47,10 @@ public class SpedizioniDTO {
                 .dataSpedizione(dataSpedizione)
                 .nomeMittente(nomeMittente)
                 .cognomeMittente(cognomeMittente)
+                .indirizzo(indirizzo)
+                .civico(civico)
+                .regione(regione)
+                .codicePostale(codicePostale)
                 .build();
         return result;
     }
@@ -61,6 +69,10 @@ public class SpedizioniDTO {
                 .nomeMittente(spedizioneModel.nomeMittente())
                 .cognomeMittente(spedizioneModel.cognomeMittente())
                 .id_persona(spedizioneModel.utente().id())
+                .indirizzo(spedizioneModel.indirizzo())
+                .civico(spedizioneModel.civico())
+                .regione(spedizioneModel.regione())
+                .codicePostale(spedizioneModel.codicePostale())
                 .build();
     }
 

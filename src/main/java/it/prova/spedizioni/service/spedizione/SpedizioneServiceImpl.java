@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,10 +38,8 @@ public class SpedizioneServiceImpl implements SpedizioneService {
         if (spedizioneReloaded == null) {
             throw new RuntimeException("Non e stato possibile tovare nessuna spedizoone con id:" + spedizioneInstance.id());
         }
-        spedizioneReloaded.codiceSpedizione(spedizioneInstance.codiceSpedizione()).descrizione(spedizioneInstance.descrizione())
-                .peso(spedizioneInstance.peso()).altezza(spedizioneInstance.peso()).lunghezza(spedizioneInstance.lunghezza())
-                .nomeDestinatario(spedizioneInstance.nomeDestinatario()).cognomeDestinatario(spedizioneReloaded.cognomeDestinatario())
-                .dataSpedizione(spedizioneInstance.dataSpedizione());
+        spedizioneInstance.dataSpedizione(String.valueOf(LocalDateTime.now()));
+        spedizioneReloaded.codiceSpedizione(spedizioneInstance.codiceSpedizione()).descrizione(spedizioneInstance.descrizione()).peso(spedizioneInstance.peso()).altezza(spedizioneInstance.peso()).lunghezza(spedizioneInstance.lunghezza()).nomeDestinatario(spedizioneInstance.nomeDestinatario()).cognomeDestinatario(spedizioneInstance.cognomeDestinatario()).dataSpedizione(spedizioneInstance.dataSpedizione()).nomeMittente(spedizioneInstance.nomeMittente()).cognomeMittente(spedizioneInstance.cognomeMittente()).indirizzo(spedizioneInstance.indirizzo()).civico(spedizioneInstance.civico()).regione(spedizioneInstance.regione()).codicePostale(spedizioneInstance.codicePostale());
         return spedizioneRepository.save(spedizioneReloaded);
     }
 
@@ -51,11 +49,13 @@ public class SpedizioneServiceImpl implements SpedizioneService {
         Utente utente = utenteRepository.findByUsername(username).orElse(null);
         spedizioneInstance.utente(utente);
         int numero = creazioneCodiceSpedizione();
-        while (spedizioneRepository.findAllByCodiceSpedizione(numero) != null){
-             numero = creazioneCodiceSpedizione();
+        while (spedizioneRepository.findAllByCodiceSpedizione(numero) != null) {
+            numero = creazioneCodiceSpedizione();
         }
+        spedizioneInstance.dataSpedizione(String.valueOf(LocalDateTime.now()));
         spedizioneInstance.codiceSpedizione(numero);
         spedizioneRepository.save(spedizioneInstance);
+
 
     }
 
@@ -69,7 +69,7 @@ public class SpedizioneServiceImpl implements SpedizioneService {
     public Integer creazioneCodiceSpedizione() {
         int min = 10000; // Minimum value of range
         int max = 99999999; // Maximum value of range
-        int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
+        int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;
     }
 
