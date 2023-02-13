@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeHttpRequests()
                 .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/utente").permitAll()
                 //tutti gli utenti autenticati possono richiedere le info
                 // .antMatchers("/anonymous*").anonymous()
                 .anyRequest().authenticated()

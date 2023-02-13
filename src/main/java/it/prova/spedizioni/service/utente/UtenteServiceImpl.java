@@ -34,7 +34,7 @@ public class UtenteServiceImpl implements UtenteService {
     }
 
     @Transactional
-    public void aggiorna(Utente utenteInstance) {
+    public Utente aggiorna(Utente utenteInstance) {
         // deve aggiornare solo nome, cognome, username, ruoli
         Utente utenteReloaded = repository.findById(utenteInstance.id()).orElse(null);
         if (utenteReloaded == null)
@@ -43,6 +43,7 @@ public class UtenteServiceImpl implements UtenteService {
         utenteReloaded.nome(utenteInstance.nome()).cognome(utenteInstance.cognome()).username(utenteInstance.username())
                 .ruoli(utenteInstance.ruoli());
         repository.save(utenteReloaded);
+        return utenteReloaded;
     }
 
     @Transactional
